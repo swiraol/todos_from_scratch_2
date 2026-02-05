@@ -1,11 +1,3 @@
-You caught me. 🥋
-
-The "Miyagi" strategy was simple: **master the individual moves** (the complex database logic) in isolation first.
-
-If you had started building the app immediately, you would have gotten stuck debugging Flask routes, HTML templates, AND complex SQL all at the same time. That is how people quit.
-
-Now, because you’ve already written the `JOIN` query and the `DELETE` transaction in your head, the actual coding will feel like muscle memory.
-
 ### The "No-Guardrails" Build Plan
 
 We are not going to build "Layer by Layer" (Database first, then Python, then HTML). We are going to build **Vertical Slices**. We build one complete feature from the database all the way to the browser before moving to the next.
