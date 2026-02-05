@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
 {% block content %}
-  {% for lst in all_lists %}
-    <ul>
-      <li>{{ lst.title }} --- {{ lst.todos_remaining }} / {{ lst.total_todos }}</li>
-    </ul>
-  {% endfor %}
+  <ul>
+    {% for lst in all_lists %}
+        <li>{{ lst.title }} --- {{ lst.todos_remaining }} / {{ lst.total_todos }}</li>
+    {% endfor %}
+  </ul>
 
 {% endblock %}
