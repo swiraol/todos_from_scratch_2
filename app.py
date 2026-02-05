@@ -21,11 +21,11 @@ def index():
 @app.route("/lists")
 def all_lists():
     # call the db method for fetching all lists and assign to all_lists (import g object to store the data)
-    all_lists = g.storage.all_lists()
+    lists = g.storage.all_lists()
     print(f"all_lists: {all_lists}")
         # db method will return the list title, list id, total todos and remaining todos counts
     # pass all_lists to lists.html for rendering
-    return render_template('lists.html', all_lists=all_lists)
+    return render_template('lists.html', all_lists=lists)
         # template will iterate over all_lists to display list title and fancy counts
 
 if __name__ == "__main__":
