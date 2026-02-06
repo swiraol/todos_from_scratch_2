@@ -15,18 +15,17 @@ def db_storage():
 
 @app.route("/")
 def index():
-    # redirect to /lists (import redirect and url_for)
     return redirect(url_for('all_lists'))
 
 @app.route("/lists")
 def all_lists():
-    # call the db method for fetching all lists and assign to all_lists (import g object to store the data)
     lists = g.storage.all_lists()
-    print(f"all_lists: {all_lists}")
-        # db method will return the list title, list id, total todos and remaining todos counts
-    # pass all_lists to lists.html for rendering
     return render_template('lists.html', all_lists=lists)
-        # template will iterate over all_lists to display list title and fancy counts
+
+@app.route("/lists/<int:list_id>")
+def show_list(list_id):
+    lst = g.storage.find_list(list_id)
+    return render_template('list.html', lst=lst)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5003)

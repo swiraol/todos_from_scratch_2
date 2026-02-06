@@ -2,7 +2,7 @@
 {% block content %}
   <ul>
     {% for lst in all_lists %}
-        <li>{{ lst.title }} --- {{ lst.todos_remaining }} / {{ lst.total_todos }}</li>
+        <li><a href="{{ url_for('show_list', list_id=lst.id) }}">{{ lst.title }}</a> --- {{ lst.todos_remaining }} / {{ lst.total_todos }}</li>
     {% endfor %}
   </ul>
 

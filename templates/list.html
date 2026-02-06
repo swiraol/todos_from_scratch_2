@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  {{ lst.title }}:
+  <ul>
+    {% for todo in lst.todos %}
+      <li>{{ todo.title }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
