@@ -1,10 +1,17 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+  <a href="{{ url_for('all_lists') }}" class="all-lists"><h2>All Lists</h2></a>
   {{ lst.title }}:
   <ul>
     {% for todo in lst.todos %}
       <li>{{ todo.title }}</li>
     {% endfor %}
   </ul>
+
+  <p>Enter a new todo item:</p>
+  <form action="{{ url_for('create_todo', list_id=lst['id']) }}" method="post">
+    <input placeholder="Something to do" type="text" name="todo_title">
+    <input type="submit" value="Add">
+  </form>
 {% endblock %}

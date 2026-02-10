@@ -2,8 +2,18 @@
 <html lang="EN">
   <head>
     <title>Todo Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   </head>
   <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="flash-{{ category }}">
+            {{ msg }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
     <h1>Todo Tracker</h1>
     <main>
       {% block content %}

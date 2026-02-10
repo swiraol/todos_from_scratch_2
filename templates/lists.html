@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
+  <a href="{{ url_for('new_list') }}" class="new-list"><h2>New List</h2></a>
   <ul>
     {% for lst in all_lists %}
         <li><a href="{{ url_for('show_list', list_id=lst.id) }}">{{ lst.title }}</a> --- {{ lst.todos_remaining }} / {{ lst.total_todos }}</li>

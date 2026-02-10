@@ -53,3 +53,17 @@ class DatabasePersistence:
         list['todos'] = todos 
 
         return list
+    
+    def create_list(self, title):
+        query = "INSERT INTO lists (title) VALUES (%s)"
+
+        with self._database_connect() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(query, (title,))
+    
+    def create_todo(self, list_id, title):
+        query = "INSERT INTO todos (title, list_id) VALUES (%s, %s)"
+
+        with self._database_connect() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(query, (title, list_id,))

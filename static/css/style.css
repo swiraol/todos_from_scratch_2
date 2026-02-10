@@ -1,0 +1,22 @@
+.all-lists {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+}
+
+.new-list {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+}
+
+.flash-success {
+  color: #155724;
+  background-color: #d4edda;
+}
+
+.flash-error {
+  color: #721c24;
+  background-color: #f8d7da;
+}
+

@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <p>Enter the name for your new list:</p>
+  <form action="{{ url_for('create_list') }}" method="post">
+    <input placeholder="List Title" type="text" name="list_title" value="{{ title }}">
+    <input type="submit" value="Save">
+    <a href="{{ url_for('all_lists') }}">Cancel</a>
+  </form>
+{% endblock %}
