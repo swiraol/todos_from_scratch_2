@@ -20,3 +20,31 @@
   background-color: #f8d7da;
 }
 
+.completed {
+  text-decoration: line-through;
+  color: #888; 
+  opacity: 0.6;        
+}
+
+.hidden {
+  display: none;
+}
+
+.list-is-all-done button {
+  text-decoration: line-through;
+  color: #888; 
+  opacity: 0.6;
+}
+
+/* FIX APPLIED: Ensure list items are struck through when parent has list-is-all-done class */
+.list-is-all-done li {
+  text-decoration: line-through;
+  color: #888; 
+  opacity: 0.6;
+}
+
+.completed-list {
+  text-decoration: line-through;
+  color: #888; 
+  opacity: 0.6;
+}

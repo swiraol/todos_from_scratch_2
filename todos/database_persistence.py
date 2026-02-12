@@ -67,3 +67,24 @@ class DatabasePersistence:
         with self._database_connect() as conn:
             with conn.cursor() as cursor:
                 cursor.execute(query, (title, list_id,))
+
+    def update_todo(self, list_id, todo_id, status):
+        query = "UPDATE todos SET completed = %s WHERE list_id = %s and id = %s"
+
+        with self._database_connect() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(query, (status, list_id, todo_id))
+
+    def complete_all(self, list_id):
+        query = "UPDATE todos SET completed = True WHERE list_id = %s"
+
+        with self._database_connect() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(query, (list_id,))
+    
+    def update_list(self, list_id, new_title):
+        query = "UPDATE lists SET title = %s WHERE id = %s"
+
+        with self._database_connect() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(query, (new_title, list_id,))

@@ -11,8 +11,9 @@
     <ul>
       {% for todo in lst.todos %}
         <li class="{{ 'completed' if todo.completed else '' }}">{{ todo.title }}</li>
+        
         <form action="{{ url_for('update_todo', list_id=lst['id'], todo_id=todo['id']) }}" method="post">
-          <button type="submit" name="completed" value="{{ not todo.completed }}">Mark as complete</button>
+          <button class="{{ 'completed' if todo.completed else '' }}" type="submit" name="completed" value="{{ not todo.completed }}">Mark as complete</button>
         </form>
       {% endfor %}
     </ul>
