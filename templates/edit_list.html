@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h3>Editing '{{ lst.title }}'</h3>
+  <p>Enter the new name for the list:</p>
+  <form action="{{ url_for('update_list', list_id=lst.id) }}" method="post">
+    <input placeholder="List Name" name="new_title" value="{{ title if title else lst.title }}">
+    <input type="submit" value="Save">
+    <a href="{{ url_for('show_list', list_id=lst.id) }}">Cancel</a>
+  </form>
+{% endblock %}
