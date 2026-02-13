@@ -103,5 +103,17 @@ def update_list(list_id):
 
     return redirect(url_for('show_list', list_id=list_id))
 
+@app.route("/lists/<int:list_id>/delete", methods=["POST"])
+def delete_list(list_id):
+    g.storage.delete_list(list_id)
+    flash("The list has been deleted", "success")
+    return redirect(url_for('all_lists'))
+
+@app.route("/lists/<int:list_id>/todos/<int:todo_id>/delete", methods=["POST"])
+def delete_todo(list_id, todo_id):
+    g.storage.delete_todo(list_id, todo_id)
+    flash("The todo has been deleted", "success")
+    return redirect(url_for('show_list', list_id=list_id))
+
 if __name__ == "__main__":
     app.run(debug=True, port=5003)

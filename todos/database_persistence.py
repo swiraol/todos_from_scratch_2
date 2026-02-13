@@ -88,3 +88,17 @@ class DatabasePersistence:
         with self._database_connect() as conn:
             with conn.cursor() as cursor:
                 cursor.execute(query, (new_title, list_id,))
+    
+    def delete_list(self, list_id):
+        query = "DELETE FROM lists WHERE id = %s"
+
+        with self._database_connect() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(query, (list_id,))
+    
+    def delete_todo(self, list_id, todo_id):
+        query = "DELETE FROM todos WHERE id = %s and list_id = %s"
+
+        with self._database_connect() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(query, (todo_id, list_id))

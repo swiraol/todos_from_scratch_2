@@ -8,4 +8,5 @@
     <input type="submit" value="Save">
     <a href="{{ url_for('show_list', list_id=lst.id) }}">Cancel</a>
   </form>
+  <form class="delete-list" action="{{ url_for('delete_list', list_id=lst.id) }}" method="post"><input type="submit" value="Delete list"></form>
 {% endblock %}

@@ -48,3 +48,9 @@
   color: #888; 
   opacity: 0.6;
 }
+
+.delete-list {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
