@@ -3,9 +3,44 @@ from psycopg2.extras import DictCursor
 
 class DatabasePersistence:
     def __init__(self):
-        pass 
-    def _database_connect(self):
-        return psycopg2.connect("dbname=todos")
+        pass
+
+    def init_db(self):
+        query = """
+            CREATE TABLE IF NOT EXISTS lists (
+                id SERIAL PRIMARY KEY,
+                title TEXT NOT NULL UNIQUE
+            );
+
+            CREATE TABLE IF NOT EXISTS todos (
+                id SERIAL PRIMARY KEY,
+                title TEXT NOT NULL,
+                completed BOOLEAN NOT NULL DEFAULT False,
+                list_id INTEGER NOT NULL REFERENCES lists (id) ON DELETE CASCADE
+            );
+        """
+
+        with self._database_connect('postgres') as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT 1 FROM pg_database WHERE datname = 'todos';")
+                row = cursor.fetchone()
+        conn.close()
+
+        if row is None:
+            conn = self._database_connect('postgres')
+            conn.autocommit = True
+            with conn.cursor() as cursor:
+                cursor.execute("CREATE DATABASE todos")
+                cursor.close()
+        conn.close()
+
+        with self._database_connect('todos') as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(query)  
+        conn.close()                  
+
+    def _database_connect(self, db_name='todos'):
+        return psycopg2.connect(f"dbname={db_name}")
     
     def all_lists(self):
         query = """

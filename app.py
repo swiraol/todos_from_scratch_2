@@ -116,4 +116,6 @@ def delete_todo(list_id, todo_id):
     return redirect(url_for('show_list', list_id=list_id))
 
 if __name__ == "__main__":
+    persistence = DatabasePersistence()
+    persistence.init_db()
     app.run(debug=True, port=5003)
