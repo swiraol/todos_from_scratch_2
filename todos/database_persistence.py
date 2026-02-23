@@ -97,14 +97,13 @@ class DatabasePersistence:
         """
 
         lst = self._query_db(query, parameters=(list_id,), result_type='one')
-
         if lst:
             lst = dict(lst)
             todos = self.find_todos(list_id)
             lst['todos'] = todos 
             return lst
-        else:
-            raise NotFound("List does not exist")
+        
+        return None
     
     def create_list(self, title):
         query = "INSERT INTO lists (title) VALUES (%s)"
