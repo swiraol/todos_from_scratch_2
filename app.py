@@ -65,7 +65,7 @@ def create_list():
         flash(error, "error")
         return render_template('new_list.html', title=title)
 
-    if any(title == lst['title'] for lst in all_lists):
+    if error_for_title(title, title_type='list',lists=all_lists):
         flash("The list title already exists")
         return render_template('new_list.html', title=title)
     
