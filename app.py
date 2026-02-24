@@ -8,7 +8,7 @@ from flask import (
             url_for,   
 ) 
 from todos.database_persistence import DatabasePersistence 
-from todos.utils import error_for_title
+from todos.utils import error_for_title, is_list_completed
 from werkzeug.exceptions import NotFound
 from functools import wraps
 
@@ -42,6 +42,10 @@ def require_todo(f):
         return f(lst, todo, *args, **kwargs)
 
     return decorated_func
+
+@app.context_processor
+def list_utilities_processor():
+    return dict(is_list_completed=is_list_completed)
 
 @app.route("/")
 def index():

@@ -77,6 +77,7 @@ class DatabasePersistence:
     def find_todos(self, list_id):
         query = """
             SELECT * FROM todos WHERE list_id = %s
+            ORDER BY todos.completed
         """
         rows = self._query_db(query, parameters=(list_id,), result_type='all')
         rows = [dict(row) for row in rows]

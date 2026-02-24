@@ -8,3 +8,6 @@ def error_for_title(title, title_type=None, lists=None):
                 return "The list title already exists"
     
     return None
+
+def is_list_completed(lst):
+    return len(lst['todos']) > 0 and all(t['completed'] for t in lst['todos'])
