@@ -64,10 +64,6 @@ def create_list():
     if error:
         flash(error, "error")
         return render_template('new_list.html', title=title)
-
-    if error_for_title(title, title_type='list',lists=all_lists):
-        flash("The list title already exists")
-        return render_template('new_list.html', title=title)
     
     g.storage.create_list(title)
     flash("You created a new list", "success")

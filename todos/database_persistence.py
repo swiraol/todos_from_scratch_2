@@ -1,7 +1,5 @@
 import psycopg2 
 from psycopg2.extras import DictCursor 
-
-from werkzeug.exceptions import NotFound
 from contextlib import contextmanager
 
 class DatabasePersistence:
@@ -92,7 +90,7 @@ class DatabasePersistence:
 
         todo = self._query_db(query, (todo_id, list_id), 'one')
         if not todo:
-            raise NotFound("Todo not found")
+            return None
         
         return dict(todo)
     
@@ -116,33 +114,25 @@ class DatabasePersistence:
     
     def create_todo(self, list_id, title):
         query = "INSERT INTO todos (title, list_id) VALUES (%s, %s)"
-        self.find_list(list_id)
         self._query_db(query, (title, list_id,))
 
     def update_todo(self, list_id, todo_id, status):
         query = "UPDATE todos SET completed = %s WHERE list_id = %s and id = %s"
-        self.find_list(list_id)
-        self.find_todo(list_id, todo_id)
         self._query_db(query, parameters=(status, list_id, todo_id))
 
     def complete_all(self, list_id):
         query = "UPDATE todos SET completed = True WHERE list_id = %s"
-        self.find_list(list_id)
         self._query_db(query, parameters=(list_id,))
     
     def update_list(self, list_id, new_title):
         query = "UPDATE lists SET title = %s WHERE id = %s"
-        self.find_list(list_id)
         self._query_db(query, parameters=(new_title, list_id,))
     
     def delete_list(self, list_id):
         query = "DELETE FROM lists WHERE id = %s"
-        self.find_list(list_id)
         self._query_db(query, parameters=(list_id,))
     
     def delete_todo(self, list_id, todo_id):
         query = "DELETE FROM todos WHERE id = %s and list_id = %s"
-        self.find_list(list_id)
-        self.find_todo(list_id, todo_id)
         self._query_db(query, parameters=(todo_id, list_id))
     
