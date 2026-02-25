@@ -26,20 +26,16 @@ class DatabasePersistence:
             with conn.cursor() as cursor:
                 cursor.execute("SELECT 1 FROM pg_database WHERE datname = 'todos';")
                 row = cursor.fetchone()
-        conn.close()
 
         if row is None:
-            conn = self._database_connect('postgres')
-            conn.autocommit = True
-            with conn.cursor() as cursor:
-                cursor.execute("CREATE DATABASE todos")
-                cursor.close()
-        conn.close()
+            with self._database_connect('postgres') as conn:
+                conn.autocommit = True
+                with conn.cursor() as cursor:
+                    cursor.execute("CREATE DATABASE todos")
 
         with self._database_connect('todos') as conn:
             with conn.cursor() as cursor:
-                cursor.execute(query)  
-        conn.close()                  
+                cursor.execute(query)               
 
     def _database_connect(self, db_name='todos'):
         return psycopg2.connect(f"dbname={db_name}")
