@@ -32,6 +32,22 @@ The current codebase is functional but relies on repetitive patterns. The next p
 * Current State: Route handlers (controllers) are responsible for repetitive tasks such as retrieving objects by ID and manually handling 404 errors.
 * Goal: Implement a decorator-based pipeline to handle resource retrieval before the route handler executes. Centralize validation and error handling upstream. Inject retrieved resources directly into view functions to keep controller logic strictly focused on the response.
 
-### 4. API Signature Simplification
-* Current State: Method signatures often require redundant context parameters (e.g., passing a parent ID when the child ID is globally unique).
-* Goal: Refactor the internal API to derive context from the data itself. Simplify method signatures to require only the minimum necessary arguments. Align method naming conventions with natural language to improve readability.
+### 4. Custom Template Filters
+* **The Requirement:** "Using template variables and custom template filters"
+* **The Gap:** We built a Context Processor (`@app.context_processor`) to inject functions, but a Template Filter is different. It uses the pipe character (`|`) in Jinja2 (e.g., `{{ todo.title | capitalize }}`).
+* **Action Item:** Learn how to build custom filters using the `@app.template_filter()` decorator in Flask to format data directly inside the HTML templates.
+
+### 5. Seeding the Database
+* **The Requirement:** "Provide the SQL needed to create and seed any databases you require."
+* **The Gap:** The `init_db()` method wrote the SQL to *create* tables, but didn't *seed* them with initial data.
+* **Action Item:** Create a `schema.sql` or `seed.sql` file filled with `INSERT INTO` statements. This ensures the database is automatically populated with dummy data (e.g., sample lists and todos) for immediate testing without manual data entry.
+
+### 6. Serving Static Files
+* **The Requirement:** "Serving static files in Flask (like CSS, JavaScript, and images)"
+* **The Gap:** The project focused entirely on backend logic and HTML generation, without hooking up external stylesheets or images.
+* **Action Item:** Understand how Flask serves files from a root `static/` directory and practice using `{{ url_for('static', filename='style.css') }}` inside the Jinja2 `<head>` tag.
+
+### 7. Sessions and Persistence
+* **The Requirement:** "Sessions and persistence"
+* **The Gap:** The app successfully used Flask's `flash()` function (which relies on secure browser sessions under the hood), but didn't explicitly manipulate the `session` dictionary.
+* **Action Item:** Import `session` from `flask` and practice manually storing state across the request/response cycle (e.g., `session['username'] = 'admin'`). This is foundational for maintaining state, such as keeping a user logged in.
