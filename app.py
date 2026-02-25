@@ -16,6 +16,16 @@ app = Flask(__name__)
 
 app.secret_key = "Hello"
 
+@app.template_filter('pluralize')
+def pluralize(num):
+    num = int(num)
+    if num == 0:
+        return "No todos"
+    elif num == 1:
+        return f"{num} total todo"
+    else:
+        return f"{num} total todos"
+
 @app.before_request 
 def db_storage():
     g.storage = DatabasePersistence()
