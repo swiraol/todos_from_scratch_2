@@ -2,6 +2,7 @@ import psycopg2
 from psycopg2.extras import DictCursor 
 
 from werkzeug.exceptions import NotFound
+from contextlib import contextmanager
 
 class DatabasePersistence:
     def __init__(self):
@@ -35,10 +36,17 @@ class DatabasePersistence:
 
         with self._database_connect('todos') as conn:
             with conn.cursor() as cursor:
-                cursor.execute(query)               
-
+                cursor.execute(query)      
+         
+    @contextmanager
     def _database_connect(self, db_name='todos'):
-        return psycopg2.connect(f"dbname={db_name}")
+        conn = psycopg2.connect(f"dbname={db_name}")
+
+        try:
+            with conn:
+                yield conn
+        finally:
+            conn.close()
     
     def _query_db(self, query, parameters=None, result_type=None):
         with self._database_connect('todos') as conn:
