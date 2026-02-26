@@ -5,6 +5,7 @@ from flask import (
             redirect,
             render_template, 
             request,
+            session,
             url_for,   
 ) 
 from todos.database_persistence import DatabasePersistence 
@@ -86,8 +87,13 @@ def new_list():
 @app.route("/lists/<int:list_id>")
 @require_list
 def show_list(lst, list_id):
-    all_completed = lst['todos'] and all(t['completed'] for t in lst['todos'])
-    return render_template('list.html', lst=lst, all_completed=all_completed)
+    if session.get('hide_completed'):
+        todos = [todo for todo in lst['todos'] if not todo['completed'] == True]
+        lst['todos'] = todos
+        message = "Show Completed"
+        return render_template('list.html', lst=lst, message=message)
+    message = "Hide Completed"
+    return render_template('list.html', lst=lst, message=message)
 
 @app.route("/lists/<int:list_id>/todos", methods=["POST"])
 @require_list 
@@ -154,7 +160,14 @@ def delete_todo(lst, todo, list_id, todo_id):
     flash("The todo has been deleted", "success")
     return redirect(url_for('show_list', list_id=list_id))
 
+@app.route("/lists/<int:list_id>/toggle-visibility", methods=["POST"])
+def toggle_visibility(list_id):
+    if session.get('hide_completed'):
+        session['hide_completed'] = False
+    else:
+        session['hide_completed'] = True
+    return redirect(url_for('show_list', list_id=list_id))
+
 if __name__ == "__main__":
     persistence = DatabasePersistence()
-    persistence.init_db()
     app.run(debug=True, port=5003)

@@ -46,6 +46,7 @@ The current codebase is functional but relies on repetitive patterns. The next p
 * **The Requirement:** "Serving static files in Flask (like CSS, JavaScript, and images)"
 * **The Gap:** The project focused entirely on backend logic and HTML generation, without hooking up external stylesheets or images.
 * **Action Item:** Understand how Flask serves files from a root `static/` directory and practice using `{{ url_for('static', filename='style.css') }}` inside the Jinja2 `<head>` tag.
+Note: Already implemented. 
 
 ### 7. Sessions and Persistence
 * **The Requirement:** "Sessions and persistence"
